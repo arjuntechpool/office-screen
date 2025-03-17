@@ -1,79 +1,62 @@
-<div class="app-container">
-  <div class="form-grid">
-    <div class="form-group">
-      <label for="mainPlace">Select Office</label>
-      <input
-        type="text"
-        id="txt_office"
-        name="txt_office"
-        placeholder="Double click here"
-        [(ngModel)]="model.office"
-        (dblclick)="selectText($event)"
-        readonly
-      />
-    </div>
-
-    <div class="select-section">
-      <div class="form-group" role="group" aria-label="Officer selection">
-        <label for="state">Select Officer</label>
-        <select
-          id="select_mgr"
-          name="select_mgr"
-          [(ngModel)]="model.mgr"
-          aria-required="true"
-          required="required"
-        >
+<div class="container mt-4">
+  <div class="card p-3 shadow-sm">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="txt_office" class="form-label">Select Office</label>
+        <input
+          type="text"
+          id="txt_office"
+          class="form-control"
+          name="txt_office"
+          placeholder="Double click here"
+          [(ngModel)]="model.office"
+          (dblclick)="selectText($event)"
+          readonly
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="select_mgr" class="form-label">Select Officer</label>
+        <select id="select_mgr" class="form-select" [(ngModel)]="model.mgr">
           <option value="" disabled>Select Officer</option>
-          <option *ngFor="let officer of officers" [value]="officer.name">
-            {{ officer.name }}
+          <option *ngFor="let officer of officers" [value]="officer">
+            {{ officer }}
           </option>
         </select>
       </div>
     </div>
 
-    <button (click)="search()" [disabled]="!model.office || !model.mgr">Search</button>
+    <button class="btn btn-primary w-100" (click)="search()">Search</button>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    <!-- Serial No Column -->
-    <ng-container matColumnDef="slNo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Sl No </th>
-      <td mat-cell *matCellDef="let element">{{ element.slNo }}</td>
-    </ng-container>
+  <div *ngIf="dataSource.data.length > 0" class="mt-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">Search Results</div>
+      <div class="card-body">
+        <table mat-table [dataSource]="dataSource" matSort class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Sl No</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Office</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Office Code</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Code</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of dataSource.data">
+              <td>{{ row.slNo }}</td>
+              <td>{{ row.office }}</td>
+              <td>{{ row.officeCode }}</td>
+              <td>{{ row.employee }}</td>
+              <td>{{ row.employeeCode }}</td>
+              <td>{{ row.weight }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <!-- Office Column -->
-    <ng-container matColumnDef="office">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office </th>
-      <td mat-cell *matCellDef="let element">{{ element.office }}</td>
-    </ng-container>
-
-    <!-- Office Code Column -->
-    <ng-container matColumnDef="officeCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Office Code </th>
-      <td mat-cell *matCellDef="let element">{{ element.officeCode }}</td>
-    </ng-container>
-
-    <!-- Employee Column -->
-    <ng-container matColumnDef="employee">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee </th>
-      <td mat-cell *matCellDef="let element">{{ element.employee }}</td>
-    </ng-container>
-
-    <!-- Employee Code Column -->
-    <ng-container matColumnDef="employeeCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Code </th>
-      <td mat-cell *matCellDef="let element">{{ element.employeeCode }}</td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
