@@ -1,37 +1,63 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+export interface Office {
+  code: string;
+  head: string;
+  shortDesc: string;
+}
 
 @Component({
   selector: 'app-view-office-modal-component',
+  templateUrl: './view-office-modal-component.component.html',
   standalone: true,
   imports: [
+    FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    CommonModule,
   ],
-  templateUrl: './view-office-modal-component.component.html',
-  styleUrl: './view-office-modal-component.component.css'
+  styleUrls: ['./view-office-modal-component.component.css']
 })
-export class ViewOfficeModalComponentComponent {
+export class ViewOfficeModalComponentComponent implements OnInit {
+  displayedColumns: string[] = ['code', 'head', 'shortDesc', 'action'];
+  dataSource = new MatTableDataSource<Office>();
+  searchQuery: string = '';
 
-  office = '';
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  offices: Office[] = [
+    { code: '110010000', head: 'Property Tax (for General Purpose)', shortDesc: 'Property Tax' },
+    { code: '110020000', head: 'Water Tax', shortDesc: 'Water Tax' },
+    { code: '110030000', head: 'Sewerage Tax', shortDesc: 'Sewerage Tax' },
+    // Add more offices as needed
+  ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ViewOfficeModalComponentComponent> // Inject MatDialogRef
+    private dialogRef: MatDialogRef<ViewOfficeModalComponentComponent>
   ) {}
 
-  // Method to handle the Close button
-  onClose() {
-    this.dialogRef.close(0); // Return 0 for Close
+  ngOnInit(): void {
+    this.dataSource.data = this.offices;
+    this.dataSource.paginator = this.paginator;
   }
-  onClick() {
-    this.dialogRef.close({ action: 1}); // Return 1 for Approve with remarks
+
+  applyFilter(): void {
+    this.dataSource.filter = this.searchQuery.trim().toLowerCase();
+  }
+
+  selectOffice(office: Office): void {
+    this.dialogRef.close(office);
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
   }
 }

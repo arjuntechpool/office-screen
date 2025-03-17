@@ -1,65 +1,45 @@
-import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
 import { ViewOfficeModalComponentComponent } from '../view-office-modal-component/view-office-modal-component.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-office-cadre',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+  imports: [FormsModule],
   templateUrl: './office-cadre.component.html',
-  styleUrl: './office-cadre.component.css'
+  styleUrls: ['./office-cadre.component.css']
 })
 export class OfficeCadreComponent {
-
-  constructor(@Inject(MatDialog) private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
-
   model = {
     office: '',
     mgr: '',
   };
 
+  officers: string[] = []; // Populate based on selected office
+
+  constructor(private dialog: MatDialog) {}
+
   selectText(event: Event): void {
-    const input = (event.target as HTMLSelectElement).value;
-    console.log("Clicked:", input);
-    this.openModal(input);
-  }
-
-  openModal(input: string): void {
-    // Logic to open the modal
-    console.log("Opening modal with input:", input);
     const dialogRef = this.dialog.open(ViewOfficeModalComponentComponent, {
-      width: '10000px', // Set the width of the modal
-      data: input, // Pass the row data to the modal
+      width: '800px', // Set a fixed width
+      maxHeight: '80vh', // Set a max height
     });
-    // You can use a modal service or any other logic to open the modal
-    const modal = document.getElementById('myModal');
-    if (modal) {
-      modal.style.display = 'block';
-      const modalContent = modal.querySelector('.modal-content');
-      if (modalContent) {
-        modalContent.textContent = `Input: ${input}`;
+
+    dialogRef.afterClosed().subscribe((selectedOffice: any) => {
+      if (selectedOffice) {
+        this.model.office = selectedOffice.head;
       }
-    }
+    });
   }
 
-  closeModal(): void {
-    const modal = document.getElementById('myModal');
-    if (modal) {
-      modal.style.display = 'none';
+  populateOfficers(officeCode: string): void {
+    // Example: Fetch officers based on office code
+    if (officeCode === '110010000') {
+      this.officers = ['Manager 1', 'Manager 2', 'Manager 3'];
+    } else if (officeCode === '110020000') {
+      this.officers = ['Manager A', 'Manager B'];
     }
-  }
-
-  onStateChange(event: Event): void {
-    const selectedState = (event.target as HTMLSelectElement).value;
-    console.log('Selected state:', selectedState);
+    // Add more logic as needed
   }
 }
