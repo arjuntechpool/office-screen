@@ -94,7 +94,8 @@ export class OfficeCadreComponent implements AfterViewInit {
 
   search(): void {
     if (this.model.office && this.model.mgr) {
-      const selectedEmployee = this.officers.find(emp => emp.name === this.model.mgr);
+      const selectedEmployee = this.officers.find(emp => emp.name.trim() === this.model.mgr.trim());
+
 
       const newEntry: TableData = {
         slNo: this.dataSource.data.length + 1,
@@ -106,6 +107,8 @@ export class OfficeCadreComponent implements AfterViewInit {
       };
 
       this.dataSource.data = [...this.dataSource.data, newEntry]; // Update table
+      this.dataSource.paginator = this.paginator; // Reassign paginator
     }
   }
+
 }
