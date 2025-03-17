@@ -37,7 +37,7 @@ export class OfficeCadreComponent implements AfterViewInit {
   model = {
     office: '',
     officeCode: '',
-    mgr: '',
+    mgr: 'Arjun',
   };
 
   officers: Employee[] = [];
