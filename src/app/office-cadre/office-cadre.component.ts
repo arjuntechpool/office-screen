@@ -61,20 +61,20 @@ export class OfficeCadreComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ViewOfficeModalComponentComponent, {
       width: '800px',
       maxHeight: '100vh',
-      data: { officeCode: this.model.officeCode, cader: this.model.cader }, // Pass data here
     });
 
     dialogRef.afterClosed().subscribe((selectedOffice: any) => {
       if (selectedOffice) {
-        this.model.office = selectedOffice.employee_name; // Update this as needed
-        this.model.officeCode = selectedOffice.employee_code; // Update this as needed
+        this.model.office = selectedOffice.Office_Name;
+        this.model.officeCode = selectedOffice.Office_code;
       }
     });
   }
 
   search(): void {
     if (this.model.office && this.model.cader) {
-      const apiUrl = `http://192.168.1.39:9090/api/v0/gen_queue_list?office_id=${this.model.officeCode}&cader=${this.model.cader}`;
+      // const apiUrl = `http://192.168.1.39:9090/api/v0/gen_queue_list?office_id=${this.model.officeCode}&cader=${this.model.cader}`;
+      const apiUrl = `http://192.168.1.39:9090/api/v0/gen_queue_list?office_id=656&cader=MGR`;
 
       this.http.get<any[]>(apiUrl).subscribe({
         next: (response) => {

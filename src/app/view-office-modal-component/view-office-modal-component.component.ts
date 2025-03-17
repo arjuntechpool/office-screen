@@ -5,7 +5,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { HttpClient } from '@angular/common/http';
 
 export interface Office {
   Office_code: string;
@@ -28,54 +27,38 @@ export interface Office {
   styleUrls: ['./view-office-modal-component.component.css']
 })
 export class ViewOfficeModalComponentComponent implements OnInit {
-  displayedColumns: string[] = [
-    'employee_code',
-    'employee_name',
-    'preferred_office',
-    'preference_order',
-    'priority_value',
-    'cader',
-    'action',
-  ];
-  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['Office_id', 'Office_code', 'Office_Name', 'action'];
+  dataSource = new MatTableDataSource<Office>();
   searchQuery: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  offices: Office[] = [
+    { Office_id: '658', Office_code: '998', Office_Name: 'Tvm Main' },
+    { Office_id: '659', Office_code: '999', Office_Name: 'Kollam Main' },
+    { Office_id: '700', Office_code: '1000', Office_Name: 'Thrissur H.O' },
+    // Add more offices as needed
+  ];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ViewOfficeModalComponentComponent>,
-    private http: HttpClient // Inject HttpClient
+    private dialogRef: MatDialogRef<ViewOfficeModalComponentComponent>
   ) {}
 
   ngOnInit(): void {
-    this.fetchData();
+    this.dataSource.data = this.offices;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  fetchData(): void {
-    const apiUrl = `http://192.168.1.39:9090/api/v0/gen_queue_list?office_id=${this.data.officeCode}&cader=${this.data.cader}`;
-
-    this.http.get<any[]>(apiUrl).subscribe({
-      next: (response) => {
-        this.dataSource.data = response;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: (err) => {
-        console.error('API Error:', err);
-        alert('Failed to fetch data. Please try again.');
-      },
-    });
-  }
-
   applyFilter(): void {
     this.dataSource.filter = this.searchQuery.trim().toLowerCase();
   }
 
-  selectOffice(office: any): void {
+  selectOffice(office: Office): void {
     this.dialogRef.close(office);
   }
 
