@@ -8,22 +8,22 @@
   </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Code Column -->
-    <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef>Code</th>
-      <td mat-cell *matCellDef="let office">{{ office.code }}</td>
+    <!-- Office ID Column -->
+    <ng-container matColumnDef="Office_id">
+      <th mat-header-cell *matHeaderCellDef>Office ID</th>
+      <td mat-cell *matCellDef="let office">{{ office.Office_id }}</td>
     </ng-container>
 
-    <!-- Head Column -->
-    <ng-container matColumnDef="head">
-      <th mat-header-cell *matHeaderCellDef>Head</th>
-      <td mat-cell *matCellDef="let office">{{ office.head }}</td>
+    <!-- Office Code Column -->
+    <ng-container matColumnDef="Office_code">
+      <th mat-header-cell *matHeaderCellDef>Office Code</th>
+      <td mat-cell *matCellDef="let office">{{ office.Office_code }}</td>
     </ng-container>
 
-    <!-- Short Desc Column -->
-    <ng-container matColumnDef="shortDesc">
-      <th mat-header-cell *matHeaderCellDef>Short Desc</th>
-      <td mat-cell *matCellDef="let office">{{ office.shortDesc }}</td>
+    <!-- Office Name Column -->
+    <ng-container matColumnDef="Office_Name">
+      <th mat-header-cell *matHeaderCellDef>Office Name</th>
+      <td mat-cell *matCellDef="let office">{{ office.Office_Name }}</td>
     </ng-container>
 
     <!-- Action Column -->
