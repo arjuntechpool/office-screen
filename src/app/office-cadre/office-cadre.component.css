@@ -14,7 +14,6 @@ body {
 .table-container {
   flex-grow: 1; /* Allows table to take remaining space */
   overflow-y: auto;
-  max-height: 400px; /* Enables scrolling */
 }
 .paginator-fixed {
   border-top: 1px solid #ddd;
