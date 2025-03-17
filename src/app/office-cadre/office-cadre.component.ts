@@ -79,7 +79,7 @@ export class OfficeCadreComponent implements AfterViewInit {
   selectText(event: Event): void {
     const dialogRef = this.dialog.open(ViewOfficeModalComponentComponent, {
       width: '800px',
-      maxHeight: '80vh',
+      maxHeight: '100vh',
     });
 
     dialogRef.afterClosed().subscribe((selectedOffice: Office | undefined) => {
