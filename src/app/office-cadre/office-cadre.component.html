@@ -2,12 +2,12 @@
   <div class="card p-3 shadow-sm">
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="txt_office" class="form-label">Select Office</label>
+        <label for="txt_cadre" class="form-label">Select Cadre</label>
         <input
           type="text"
-          id="txt_office"
+          id="txt_cadre"
           class="form-control"
-          name="txt_office"
+          name="txt_cadre"
           placeholder="Double click here"
           [(ngModel)]="model.office"
           (dblclick)="selectText($event)"
@@ -15,10 +15,10 @@
         />
       </div>
       <div class="col-md-6">
-        <label for="select_mgr" class="form-label">Select Officer</label>
+        <label for="select_mgr" class="form-label">Select Cadre</label>
         <select id="select_mgr" class="form-select" [(ngModel)]="model.mgr">
-          <option value="" disabled>Select Officer</option>
-          <option *ngFor="let officer of officers" [value]="officer">
+          <option value="" disabled>Select Cadre</option>
+          <option *ngFor="let officer of officers" [value]="officer.name">
             {{ officer.name }}
           </option>
         </select>
@@ -48,16 +48,16 @@
             <td mat-cell *matCellDef="let element">{{ element.slNo }}</td>
           </ng-container>
 
-          <!-- Office Column -->
+          <!-- Cadre Column -->
           <ng-container matColumnDef="office">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Office</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cadre</th>
             <td mat-cell *matCellDef="let element">{{ element.office }}</td>
           </ng-container>
 
-          <!-- Office Code Column -->
+          <!-- Cadre Code Column -->
           <ng-container matColumnDef="officeCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Office Code
+              Cadre Code
             </th>
             <td mat-cell *matCellDef="let element">{{ element.officeCode }}</td>
           </ng-container>

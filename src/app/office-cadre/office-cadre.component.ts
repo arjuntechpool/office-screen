@@ -10,6 +10,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 interface Office {
   Office_Name: string;
   Office_code: string;
+  Employee: string;
+  emp_code: number;
 }
 
 interface Employee {
@@ -37,10 +39,10 @@ export class OfficeCadreComponent implements AfterViewInit {
   model = {
     office: '',
     officeCode: '',
-    mgr: 'Arjun',
+    mgr: '', // Employee Name
   };
 
-  officers: Employee[] = [];
+  officers: any[] = [];
   displayedColumns: string[] = ['slNo', 'office', 'officeCode', 'employee', 'employeeCode', 'weight'];
   dataSource = new MatTableDataSource<TableData>([]);
 
@@ -83,31 +85,27 @@ export class OfficeCadreComponent implements AfterViewInit {
       if (selectedOffice) {
         this.model.office = selectedOffice.Office_Name;
         this.model.officeCode = selectedOffice.Office_code;
-        this.populateOfficers(selectedOffice.Office_code);
+        this.officers = this.employeeData[this.model.officeCode] || [];
       }
     });
   }
 
-  populateOfficers(officeCode: string): void {
-    this.officers = this.employeeData[officeCode] || [];
-  }
-
   search(): void {
     if (this.model.office && this.model.mgr) {
-      const selectedEmployee = this.officers.find(emp => emp.name.trim() === this.model.mgr.trim());
-
+      const employees = this.employeeData[this.model.officeCode] || [];
+      const selectedEmployee = employees.find(emp => emp.name === this.model.mgr);
 
       const newEntry: TableData = {
         slNo: this.dataSource.data.length + 1,
         office: this.model.office,
         officeCode: this.model.officeCode,
-        employee: selectedEmployee?.name || 'Unknown',
-        employeeCode: selectedEmployee?.code || 'N/A',
-        weight: Math.floor(Math.random() * 100), // Keeping weight dynamic
+        employee: this.model.mgr, // Now it's just a string
+        employeeCode: selectedEmployee ? selectedEmployee.code : 'N/A', // Correct lookup
+        weight: Math.floor(Math.random() * 100),
       };
 
-      this.dataSource.data = [...this.dataSource.data, newEntry]; // Update table
-      this.dataSource.paginator = this.paginator; // Reassign paginator
+      this.dataSource.data = [...this.dataSource.data, newEntry];
+      this.dataSource.paginator = this.paginator;
     }
   }
 
