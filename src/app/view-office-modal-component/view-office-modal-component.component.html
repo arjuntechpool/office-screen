@@ -4,28 +4,52 @@
   <div class="search-container mb-3">
     <mat-form-field class="w-100">
       <mat-label>Search</mat-label>
-      <input matInput class="form-control" placeholder="Search offices" [(ngModel)]="searchQuery" (input)="applyFilter()" />
+      <input
+        matInput
+        class="form-control"
+        placeholder="Search offices"
+        [(ngModel)]="searchQuery"
+        (input)="applyFilter()"
+      />
     </mat-form-field>
   </div>
 
   <div class="table-responsive">
     <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered">
-      <!-- Office ID Column -->
-      <ng-container matColumnDef="Office_id">
-        <th mat-header-cell *matHeaderCellDef class="text-center">Office ID</th>
-        <td mat-cell *matCellDef="let office" class="text-center">{{ office.Office_id }}</td>
+      <!-- Employee Code Column -->
+      <ng-container matColumnDef="employee_code">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Employee Code</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.employee_code }}</td>
       </ng-container>
 
-      <!-- Office Code Column -->
-      <ng-container matColumnDef="Office_code">
-        <th mat-header-cell *matHeaderCellDef class="text-center">Office Code</th>
-        <td mat-cell *matCellDef="let office" class="text-center">{{ office.Office_code }}</td>
+      <!-- Employee Name Column -->
+      <ng-container matColumnDef="employee_name">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Employee Name</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.employee_name }}</td>
       </ng-container>
 
-      <!-- Office Name Column -->
-      <ng-container matColumnDef="Office_Name">
-        <th mat-header-cell *matHeaderCellDef class="text-center">Office Name</th>
-        <td mat-cell *matCellDef="let office" class="text-center">{{ office.Office_Name }}</td>
+      <!-- Preferred Office Column -->
+      <ng-container matColumnDef="preferred_office">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Preferred Office</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.preferred_office }}</td>
+      </ng-container>
+
+      <!-- Preference Order Column -->
+      <ng-container matColumnDef="preference_order">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Preference Order</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.preference_order }}</td>
+      </ng-container>
+
+      <!-- Priority Value Column -->
+      <ng-container matColumnDef="priority_value">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Priority Value</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.priority_value }}</td>
+      </ng-container>
+
+      <!-- Cader Column -->
+      <ng-container matColumnDef="cader">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Cader</th>
+        <td mat-cell *matCellDef="let office" class="text-center">{{ office.cader }}</td>
       </ng-container>
 
       <!-- Action Column -->

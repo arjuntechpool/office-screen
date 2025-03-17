@@ -1,33 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewOfficeModalComponentComponent } from '../view-office-modal-component/view-office-modal-component.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-
-interface Office {
-  Office_Name: string;
-  Office_code: string;
-}
-
-interface Cader {
-  name: string;
-  code: string;
-}
-
-interface TableData {
-  slNo: number;
-  office: string;
-  officeCode: string;
-  cader: string;
-  caderCode: string;
-  weight: number;
-}
+import { ViewOfficeModalComponentComponent } from '../view-office-modal-component/view-office-modal-component.component';
 
 @Component({
-  selector: 'app-office-cader',
+  selector: 'app-office-cadre',
   standalone: true,
   imports: [
     FormsModule,
@@ -47,17 +29,16 @@ export class OfficeCadreComponent implements AfterViewInit {
   };
 
   displayedColumns: string[] = [
-    'slNo',
-    'office',
-    'officeCode',
+    'employee_code',
+    'employee_name',
+    'preferred_office',
+    'preference_order',
+    'priority_value',
     'cader',
-    'caderCode',
-    'weight',
   ];
-  dataSource = new MatTableDataSource<TableData>([]);
+  dataSource = new MatTableDataSource<any>([]);
 
-  // ✅ Independent cader List (No Office Code Mapping)
-  allCader: Cader[] = [
+  allCader: { name: string; code: string }[] = [
     { name: 'ASST', code: 'CADer001' },
     { name: 'AM', code: 'CADer002' },
     { name: 'MGR', code: 'CADer003' },
@@ -69,7 +50,7 @@ export class OfficeCadreComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private http: HttpClient) {}
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -80,33 +61,31 @@ export class OfficeCadreComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ViewOfficeModalComponentComponent, {
       width: '800px',
       maxHeight: '100vh',
+      data: { officeCode: this.model.officeCode, cader: this.model.cader }, // Pass data here
     });
 
-    dialogRef.afterClosed().subscribe((selectedOffice: Office | undefined) => {
+    dialogRef.afterClosed().subscribe((selectedOffice: any) => {
       if (selectedOffice) {
-        this.model.office = selectedOffice.Office_Name;
-        this.model.officeCode = selectedOffice.Office_code;
+        this.model.office = selectedOffice.employee_name; // Update this as needed
+        this.model.officeCode = selectedOffice.employee_code; // Update this as needed
       }
     });
   }
 
   search(): void {
     if (this.model.office && this.model.cader) {
-      const selectedCader = this.allCader.find(
-        (emp) => emp.name === this.model.cader
-      );
+      const apiUrl = `http://192.168.1.39:9090/api/v0/gen_queue_list?office_id=${this.model.officeCode}&cader=${this.model.cader}`;
 
-      const newEntry: TableData = {
-        slNo: this.dataSource.data.length + 1,
-        office: this.model.office,
-        officeCode: this.model.officeCode,
-        cader: this.model.cader, // Now it's just a string
-        caderCode: selectedCader ? selectedCader.code : 'N/A', // Correct lookup
-        weight: Math.floor(Math.random() * 100),
-      };
-
-      this.dataSource.data = [...this.dataSource.data, newEntry];
-      this.dataSource.paginator = this.paginator;
+      this.http.get<any[]>(apiUrl).subscribe({
+        next: (response) => {
+          this.dataSource.data = response;
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (err) => {
+          console.error('API Error:', err);
+          alert('Failed to fetch data. Please try again.');
+        },
+      });
     }
   }
 }
