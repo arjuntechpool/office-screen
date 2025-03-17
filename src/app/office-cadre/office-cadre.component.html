@@ -2,12 +2,12 @@
   <div class="card p-3 shadow-sm">
     <div class="row mb-3">
       <div class="col-md-4">
-        <label for="txt_cadre" class="form-label">Select Office</label>
+        <label for="txt_cader" class="form-label">Select Office</label>
         <input
           type="text"
-          id="txt_cadre"
+          id="txt_cader"
           class="form-control"
-          name="txt_cadre"
+          name="txt_cader"
           placeholder="Double click here"
           [(ngModel)]="model.office"
           (dblclick)="selectText($event)"
@@ -15,10 +15,10 @@
         />
       </div>
       <div class="col-md-4">
-        <label for="select_mgr" class="form-label">Select Cadre</label>
-        <select id="select_cadre" class="form-select" [(ngModel)]="model.cadre">
-          <option *ngFor="let cadre of allCadre" [value]="cadre.name">
-            {{ cadre.name }}
+        <label for="select_mgr" class="form-label">Select Cader</label>
+        <select id="select_cader" class="form-select" [(ngModel)]="model.cader">
+          <option *ngFor="let cader of allCader" [value]="cader.name">
+            {{ cader.name }}
           </option>
         </select>
       </div>
@@ -26,7 +26,7 @@
         <button
           class="btn btn-primary"
           (click)="search()"
-          [disabled]="!model.office || !model.cadre"
+          [disabled]="!model.office || !model.cader"
         >
           Search
         </button>
@@ -62,17 +62,17 @@
           <td mat-cell *matCellDef="let element">{{ element.officeCode }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="cadre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cadre</th>
-          <td mat-cell *matCellDef="let element">{{ element.cadre }}</td>
+        <ng-container matColumnDef="cader">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cader</th>
+          <td mat-cell *matCellDef="let element">{{ element.cader }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="cadreCode">
+        <ng-container matColumnDef="caderCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Cadre Code
+            Cader Code
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.cadreCode }}
+            {{ element.caderCode }}
           </td>
         </ng-container>
 

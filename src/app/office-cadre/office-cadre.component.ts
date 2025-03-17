@@ -12,7 +12,7 @@ interface Office {
   Office_code: string;
 }
 
-interface Cadre {
+interface Cader {
   name: string;
   code: string;
 }
@@ -21,13 +21,13 @@ interface TableData {
   slNo: number;
   office: string;
   officeCode: string;
-  cadre: string;
-  cadreCode: string;
+  cader: string;
+  caderCode: string;
   weight: number;
 }
 
 @Component({
-  selector: 'app-office-cadre',
+  selector: 'app-office-cader',
   standalone: true,
   imports: [
     FormsModule,
@@ -43,27 +43,27 @@ export class OfficeCadreComponent implements AfterViewInit {
   model = {
     office: '',
     officeCode: '',
-    cadre: '', // cadre Name
+    cader: '', // cader Name
   };
 
   displayedColumns: string[] = [
     'slNo',
     'office',
     'officeCode',
-    'cadre',
-    'cadreCode',
+    'cader',
+    'caderCode',
     'weight',
   ];
   dataSource = new MatTableDataSource<TableData>([]);
 
-  // ✅ Independent cadre List (No Office Code Mapping)
-  allCadre: Cadre[] = [
-    { name: 'ASST', code: 'CADRE001' },
-    { name: 'AM', code: 'CADRE002' },
-    { name: 'MGR', code: 'CADRE003' },
-    { name: 'OA', code: 'CADRE004' },
-    { name: 'PTS', code: 'CADRE005' },
-    { name: 'Others', code: 'CADRE006' },
+  // ✅ Independent cader List (No Office Code Mapping)
+  allCader: Cader[] = [
+    { name: 'ASST', code: 'CADer001' },
+    { name: 'AM', code: 'CADer002' },
+    { name: 'MGR', code: 'CADer003' },
+    { name: 'OA', code: 'CADer004' },
+    { name: 'PTS', code: 'CADer005' },
+    { name: 'Others', code: 'CADer006' },
   ];
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -91,17 +91,17 @@ export class OfficeCadreComponent implements AfterViewInit {
   }
 
   search(): void {
-    if (this.model.office && this.model.cadre) {
-      const selectedCadre = this.allCadre.find(
-        (emp) => emp.name === this.model.cadre
+    if (this.model.office && this.model.cader) {
+      const selectedCader = this.allCader.find(
+        (emp) => emp.name === this.model.cader
       );
 
       const newEntry: TableData = {
         slNo: this.dataSource.data.length + 1,
         office: this.model.office,
         officeCode: this.model.officeCode,
-        cadre: this.model.cadre, // Now it's just a string
-        cadreCode: selectedCadre ? selectedCadre.code : 'N/A', // Correct lookup
+        cader: this.model.cader, // Now it's just a string
+        caderCode: selectedCader ? selectedCader.code : 'N/A', // Correct lookup
         weight: Math.floor(Math.random() * 100),
       };
 
