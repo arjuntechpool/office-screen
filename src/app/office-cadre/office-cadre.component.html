@@ -1,8 +1,8 @@
 <div class="container mt-4">
   <div class="card p-3 shadow-sm">
     <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="txt_cadre" class="form-label">Select Cadre</label>
+      <div class="col-md-4">
+        <label for="txt_cadre" class="form-label">Select Office</label>
         <input
           type="text"
           id="txt_cadre"
@@ -14,26 +14,27 @@
           readonly
         />
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <label for="select_mgr" class="form-label">Select Cadre</label>
-        <select id="select_mgr" class="form-select" [(ngModel)]="model.mgr">
-          <option value="" disabled>Select Cadre</option>
-          <option *ngFor="let officer of officers" [value]="officer.name">
-            {{ officer.name }}
+        <select id="select_cadre" class="form-select" [(ngModel)]="model.cadre">
+          <option *ngFor="let cadre of allCadre" [value]="cadre.name">
+            {{ cadre.name }}
           </option>
         </select>
       </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button
+          class="btn btn-primary"
+          (click)="search()"
+          [disabled]="!model.office || !model.cadre"
+        >
+          Search
+        </button>
+      </div>
     </div>
-    <button
-      class="btn btn-primary d-block mx-auto"
-      (click)="search()"
-      [disabled]="!model.office || !model.mgr"
-    >
-      Search
-    </button>
   </div>
 
-  <div *ngIf="dataSource.data.length > 0" class="mt-4">
+  <div class="mt-4">
     <div class="card shadow-sm">
       <div class="card-header bg-primary text-white">Search Results</div>
       <div class="card-body">
@@ -62,19 +63,19 @@
             <td mat-cell *matCellDef="let element">{{ element.officeCode }}</td>
           </ng-container>
 
-          <!-- Employee Column -->
-          <ng-container matColumnDef="employee">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
-            <td mat-cell *matCellDef="let element">{{ element.employee }}</td>
+          <!-- cadre Column -->
+          <ng-container matColumnDef="cadre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cadre</th>
+            <td mat-cell *matCellDef="let element">{{ element.cadre }}</td>
           </ng-container>
 
-          <!-- Employee Code Column -->
-          <ng-container matColumnDef="employeeCode">
+          <!-- cadre Code Column -->
+          <ng-container matColumnDef="cadreCode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Employee Code
+              Cadre Code
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.employeeCode }}
+              {{ element.cadreCode }}
             </td>
           </ng-container>
 
