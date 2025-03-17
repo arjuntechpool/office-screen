@@ -1,0 +1,4 @@
+/* Style for the buttons in the modal */
+.actions button {
+  margin-left: 8px; /* Add space between buttons */
+}

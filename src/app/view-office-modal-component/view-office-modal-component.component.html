@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>View Details</h2>
+<mat-dialog-content>
+  <div class="select-section">
+    <!-- State Selection -->
+    <div class="form-group" role="group" aria-label="State selection">
+      <label for="state">Select State</label>
+      <select
+        id="select_mgr"
+        name="select_mgr"
+        [(ngModel)]="office"
+        aria-required="true"
+        required="required"
+      >
+        <option value="" disabled>Select Office</option>
+        <option value="state1">TVM HO</option>
+        <option value="state2">THRISSUR HO</option>
+        <option value="state4">ULLOOR</option>
+        <option value="state5">KAZHAKKOOTTAM</option>
+        <option value="state5">KESAVADASAPURAM</option>
+      </select>
+      <!-- *ngIf="submitted && !isStateValid()" -->
+    </div>
+</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="actions">
+  <button mat-button (click)="onClick">OK</button>
+  <!-- Close Button -->
+  <button mat-button (click)="onClose()">Close</button>
+</mat-dialog-actions>

@@ -1,1 +1,48 @@
-<p>office-cadre works!</p>
+<div class="app-container">
+<div class="form-grid">
+  <div class="form-group">
+    <label for="mainPlace">Select Office</label>
+    <input
+      type="text"
+      id="txt_office"
+      name="txt_office"
+      placeholder="Double click here"
+      [(ngModel)]="model.office"
+      (dblclick)="selectText($event)"
+      readonly
+    />
+  </div>
+
+  <div class="select-section">
+    <!-- State Selection -->
+    <div class="form-group" role="group" aria-label="State selection">
+      <label for="state">Select State</label>
+      <select
+        id="select_mgr"
+        name="select_mgr"
+        [(ngModel)]="model.mgr"
+        aria-required="true"
+        required="required"
+      >
+        <option value="" disabled>Select Manager</option>
+        <option value="state1">General Manager</option>
+        <option value="state2">Assistant Manager</option>
+        <option value="state4">Senior Manager</option>
+        <option value="state5">Manager Gr.III</option>
+        <option value="state5">Manager Gr.IV</option>
+      </select>
+    </div>
+</div>
+</div>
+<div class="search-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      placeholder="Search records"
+      class="search-field"
+      />
+      <!-- (keyup)="applyFilter($event)" -->
+  </mat-form-field>
+</div>
+</div>
